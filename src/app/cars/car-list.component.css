@@ -1,0 +1,91 @@
+@media screen and (max-width: 1099px) {
+  .action-btn {
+    height: 25px !important;
+    font-size: 12px !important;
+  }
+  .colOfImage_width {
+    width: 140px !important;
+  }
+}
+
+@media screen and (max-width: 1077px) {
+  .image_car_inventory {
+    width: 74px !important;
+  }
+}
+
+@media screen and (max-width: 979px) {
+  .td-line-height {
+    line-height: 0px !important;
+  }
+  .display-none-color {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .display-none-price {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 765px) {
+  .display-none-ava {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 635px) {
+  .display-none-img {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 467px) {
+  .display-none-model {
+    display: none;
+  }
+  .td-line-height {
+    width: 125px !important;
+  }
+  .action-btn {
+    height: 22px !important;
+    font-size: 11px !important;
+  }
+}
+
+thead {
+  color: #337ab7;
+}
+h1 {
+  font-size: 0.9rem;
+}
+td {
+  padding-bottom: 0px !important;
+  height: 46px;
+}
+.show-hide-btn {
+  height: 32px !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+}
+.action-btn {
+  font-size: 14px;
+  margin-bottom: 3px;
+  height: 30px;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+}
+.image_car_inventory {
+  width: 53px;
+  margin: 2px;
+}
+.colOfImage_width {
+  width: 15%;
+}
+button[disabled] {
+  cursor: not-allowed;
+}
+input[readonly] {
+  cursor: not-allowed;
+}

@@ -1,0 +1,21 @@
+.nav-link {
+  font-size: medium;
+}
+.navbar-brand {
+  margin-left: 2px;
+  font-size: x-large;
+}
+@media screen and (max-width: 576px) and (min-width: 400px) {
+  .navbar-expand {
+    flex-flow: wrap;
+  }
+  /* .col-50 {
+    width: 50% !important;
+  } */
+}
+.navbar {
+  position: sticky !important;
+}
+.container {
+  max-width: 94% !important;
+}

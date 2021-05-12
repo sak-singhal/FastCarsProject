@@ -1,0 +1,40 @@
+thead {
+  color: #337ab7;
+}
+@media screen and (max-width: 848px) {
+  .display-none-csprice {
+    display: none;
+  }
+}
+@media screen and (max-width: 780px) {
+  .display-none-price {
+    display: none;
+  }
+  .add-complain {
+    font-size: 11px;
+  }
+}
+
+/* @media screen and (max-width: 779px) and (min-width: 654px) {
+  .add-complain {
+    font-size: 11px;
+  }
+} */
+@media screen and (max-width: 655px) {
+  .display-none-cname {
+    display: none;
+  }
+  /* .add-complain {
+    font-size: 11px;
+  } */
+}
+@media screen and (max-width: 525px) {
+  .display-none-csproduct {
+    display: none;
+  }
+}
+@media screen and (max-width: 425px) {
+  .display-none-name {
+    display: none;
+  }
+}

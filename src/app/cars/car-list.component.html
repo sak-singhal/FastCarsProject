@@ -1,0 +1,353 @@
+<div class="card">
+    <div class="card-header">
+        {{ pageTitle }}
+    </div>
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-2 col-sm-2">Filter by:</div>
+          <div class="col-md-4 col-sm-6">
+        <input type="text" [(ngModel)]="listFilter" />
+      </div>
+      <div class="col-md-6 col-sm-4" *ngIf="listFilter">
+        <b>Filtered by: </b> <i>{{listFilter}}</i> 
+    </div>
+        </div>
+        <!-- <div class="row" *ngIf="listFilter">
+            <div class="col-md-6">
+                <h1>Filtered by: {{listFilter}}</h1>
+            </div>
+        </div> -->
+        <div class="table-responsive table-hover ">
+            <table class="table " *ngIf="cars && cars.length">
+                <thead>
+                    <tr>
+                        <th>S.No</th>
+                        <th class="colOfImage_width display-none-img">
+                            <button class='btn btn-info show-hide-btn'
+                                    (click)='toggleImage()'>
+                              {{showImage ? 'Show' : 'Hide'}} Image
+                            </button>
+                          </th>
+                        <th>Car Name</th>
+                        <th class="display-none-model">Model</th>
+                        <th class="display-none-color">Color</th>
+                        <th class="display-none-price">Price</th>
+                        <th class="display-none-ava">Availability</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let car of filteredProducts|paginate: { itemsPerPage:5, currentPage: page }" 
+                     >
+                     <td > 
+                      <a  style="border: 2px double ; border-radius:5px;" title="Click to Send Car Details to Customer" href="mailto:?subject=Car Details&body=1. Car Name - {{car.carName}} 
+                      2. Car Model - {{car.car_model}}
+                      3. Car Color - {{car.car_color}} 
+                      4. Car Price - {{car.price}} 
+                      5. Car Availability - {{car.availability }}" >{{ car.id }}</a >
+                        </td>
+                        <td  class="colOfImage_width display-none-img" style="padding-top:5px">
+                          <a  title="Click to Send Car Details to Customer" href="mailto:?subject=Car Details&body=1. Car Name - {{car.carName}} 
+                          2. Car Model - {{car.car_model}}
+                          3. Car Color - {{car.car_color}} 
+                          4. Car Price - {{car.price}} 
+                          5. Car Availability - {{car.availability }}" >
+                            <img class="image_car_inventory" *ngIf='showImage' 
+                                 [src]='car.carimage'
+                                
+                                >
+                                </a>
+                          </td>
+                        <td>
+                            <a [routerLink]="['/cars', car.id]">
+                            {{car.carName}}
+                            </a>
+                        </td>
+                        <td class="display-none-model">{{car.car_model}}</td>
+                        <td class="display-none-color">{{car.car_color}}</td>
+                        <td class="display-none-price">{{ car.price }}</td>
+                        <td class="display-none-ava"> {{car.availability ? "Yes" : "No"}} 
+                          </td>
+                          <td class="td-line-height" style="padding-top:8px"> 
+
+                            <button type="button" class='btn btn-outline-warning action-btn cart_height '
+                            (click)='addToCart(car)' data-toggle="modal" data-target="#exampleModal" [disabled]="car.availability==false">
+                              Add To cart
+                              </button>
+                               &nbsp; 
+                               <button type="button" class='btn btn-info action-btn update_height'
+                               (click)='opneUpdate(car)' data-toggle="modal" data-target="#exampleModal2">
+                               Update
+                                 </button>
+                               
+                              </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+        Error: {{ errorMessage }}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+  <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form class="was-validated" #userForm="ngForm" (ngSubmit)="registerCar(userForm.value)" >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Register Car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           <div style="display:flex; flex-direction: row;  align-items: center">
+          
+        <div style="width: 75%;">
+         
+                <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                  <label style="width:59%;" for="carName">Car Name</label>
+                  <input type="text" class="form-control"   [(ngModel)]="cars2.carName" name="carName" id="carName" placeholder="Enter Car Name"
+                  #youname="ngModel" readonly />
+                </div>
+                <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 59%;" for="car_model">Model Name</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.car_model" name="car_model" id="car_model" placeholder="Enter Model Name"
+                    #youname="ngModel"readonly />
+                  </div>
+                  </div>
+                  <div  style="width:25%;" class="form-group">
+                    <img style="width: 100%;" [(ngModel)]="cars2.carimage" name="carimage"
+                    [src]='cars2.carimage'
+                    [title]='cars2.carName'
+                   >
+                  </div>
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 38%;" for="car_color">Color</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.car_color" name="car_color" id="car_color" placeholder="Enter Color of the Car"
+                    #youname="ngModel"readonly />
+                  
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 38%;" for="car_color">Car Model year</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.car_model_year" name="car_model_year" id="car_model_year" placeholder="Enter Model Year"
+                    #youname="ngModel"readonly />
+                  
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 38%;" for="car_color">Car Vin</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.car_vin" name="car_vin" id="car_vin" placeholder="Enter Car Vin"
+                    #youname="ngModel"readonly />
+                  
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 38%;" for="price">Price</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.price" name="price" id="price" placeholder="Enter Price of the Car"
+                    #youname="ngModel" readonly />
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 38%;" for="customer_name">Customer Name</label>
+                    <input type="text" class="form-control"   [(ngModel)]="cars2.customer_name" name="customer_name" id="customer_name" placeholder="Enter Customer Name"
+                    #youname="ngModel"  required/>
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                      <label  style="width: 38%;" for="customer_number">Mobile Number</label>
+                      <input type="text" class="form-control"  [(ngModel)]="cars2.customer_number" name="customer_number" id="customer_number" placeholder="Enter Customer Mobile Number"
+                      #youname="ngModel" maxlength="10" required/>
+                    </div>
+                   
+                    <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                      <label style="width: 38%;" for="customer_email">Email</label>
+                      <input type="text" class="form-control"  [(ngModel)]="cars2.customer_email" name="customer_email" id="customer_email" placeholder="Enter Customer Email"
+                      #youname="ngModel" required />
+                    </div>
+                         
+              
+                
+                <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                  <label for="customer_address" style="width: 38%;">Address</label>
+                  <textarea class="form-control" [(ngModel)]="cars2.customer_address" name="customer_address" id="customer_address" rows="2" required></textarea>
+                </div>
+              
+                
+                <div class="form-group">
+                  <label for="exampleFormControlTextarea1"><b>Extra Product You Can buy</b></label>
+
+                  <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cars2.crossSellProductId" name="crossSellProductId">
+                   
+                    <option *ngFor="let data of crossSellProducts" value="{{data.id}}">
+                    
+                      <div class="card" style="width: 18rem;">
+                      
+                        <div class="card-body">
+                          <h5 class="card-title"> {{data.productName}}</h5>
+                         <p class="card-text">  {{data.price}}</p>
+                        
+                         
+                          
+                         
+                        </div>
+                      </div>
+                    </option>
+                  
+                  </select>
+
+
+                  <!-- <div *ngFor="let data of crossSellProducts">
+
+                    <div class="container">
+                    
+                      <div class="row">
+                        <div class="col-6 col-md-4">
+                          
+                          <div class="form-check form-check-inline">
+
+                            
+                            <input class="form-check-input"   name="{{data.productName}}"
+                             type="checkbox" id="inlineCheckbox1" value="{{data.id}}">
+      
+      
+      
+                            <label class="form-check-label" for="inlineCheckbox1">
+                              <div class="card" style="width: 18rem;">
+                                <img src="..." class="card-img-top" alt="...">
+                                <div class="card-body">
+                                  <h5 class="card-title"> {{data.productName}}</h5>
+                                  <p class="card-text">  {{data.product_color}}</p>
+                                  <p class="card-text">  {{data.price}}</p>
+                                  <p class="card-text">  {{data.product_model}}</p>
+                                  <p class="card-text">  {{data.availability}}</p>
+                                 
+                                </div>
+                              </div>
+                            </label>
+                          </div>
+                        
+                        </div>
+                      
+                      </div>
+                    </div>
+                    
+                  </div> 
+                   -->
+
+                   
+                </div>
+            
+        </div>
+        <div class="modal-footer">
+          <div *ngIf="errorMsg" class="alert alert-danger">
+            Error: All Fields Are Required
+        </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" type="submit">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- ------------------update start---------------- -->
+
+
+  <div style="padding-left: 0px;" class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form #userForm="ngForm" (ngSubmit)="updateCars(userForm.value)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Car</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+           
+                <div class="form-group " style="display:flex; flex-direction: row; justify-content: center; align-items: center" >
+              
+                  <label style="width: 40%;" for="carName">Car Name</label>
+                 <input type="text" class="form-control"   [(ngModel)]="car2.carName" name="carName" id="carName" placeholder="Enter Car Name"
+                  #youname="ngModel" maxlength="20" >
+               
+                </div>
+                <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 40%;" for="car_model">Model Name</label>
+                    <input type="text" class="form-control"   [(ngModel)]="car2.car_model" name="car_model" id="car_model" placeholder="Enter Model Name"
+                    #youname="ngModel"  maxlength="20" />
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label  style="width: 40%;" for="car_color">Color</label>
+                    <input type="text" class="form-control"   maxlength="10" [(ngModel)]="car2.car_color" name="car_color" id="car_color" placeholder="Enter Color "
+                    #youname="ngModel"  />
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label style="width: 40%;" for="exampleFormControlInput1">Model Year</label>
+                    <input type="number" class="form-control"  maxlength="4" [(ngModel)]="car2.car_model_year" name="model_year"  id="model_year" placeholder="Enter Model Year"
+                    #youname="ngModel" />
+               
+                      
+                       
+                          
+                  </div>
+                  <div class="form-group " style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label  style="width: 40%;"for="car_vin">Vin</label>
+                    <input type="text" class="form-control"   [(ngModel)]="car2.car_vin" name="car_vin" id="car_vin" placeholder="Enter Car Vin"
+                    #youname="ngModel" />
+                  </div>
+                  <div class="form-group" style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                    <label  style="width: 40%;" for="price">Price</label>
+                    <input type="text" class="form-control"   [(ngModel)]="car2.price" name="price" id="price" placeholder="Enter Car Price"
+                    #youname="ngModel"/>
+                  </div>
+                  <fieldset class="form-group">
+                    <div class="row">
+                      <legend   class="col-form-label col-sm-3 pt-0">Availability</legend>
+                      <div  style="padding-left: 23px;" class="col-sm-9">
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" [(ngModel)]="car2.availability" name="availability" id="gridRadios1" value="true">
+                          <label class="form-check-label" for="gridRadios1">
+                            Yes
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" [(ngModel)]="car2.availability" name="availability" id="gridRadios2" value="false">
+                          <label class="form-check-label" for="gridRadios2">
+                           No
+                          </label>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </fieldset>
+                         
+              
+              
+
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" type="submit" >Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>

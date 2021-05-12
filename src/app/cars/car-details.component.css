@@ -1,0 +1,28 @@
+@media screen and (max-width: 768px) {
+  .padding_sm_div {
+    padding: 0px !important;
+  }
+  /* img {
+      width: 90% !important;
+    } */
+}
+@media screen and (max-width: 576px) {
+  .flex_wrap {
+    flex-wrap: nowrap;
+  }
+  /* .col-50 {
+      width: 50% !important;
+    } */
+}
+@media screen and (max-width: 576px) and (min-width: 476px) {
+  .col-50 {
+    width: 50% !important;
+  }
+}
+img {
+  width: 100%;
+  margin: 2px;
+}
+.font-bold {
+  font-weight: bold;
+}
